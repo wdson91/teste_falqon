@@ -15,7 +15,7 @@ userRouter.post("/register", registerMiddleware, async (req, res) => {
     const newPass = await bcrypt.hash(pass, 10);
 
     const user = await prisma.user.create({
-      data: { ...req.body, pass: newPass },
+      data: { ...req.body,age: +req.body.age, pass: newPass },
     });
 
     res.send({ msg: "User registered successfully", user });
