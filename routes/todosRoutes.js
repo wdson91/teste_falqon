@@ -42,7 +42,7 @@ todosRoute.get("/", auth, async (req, res) => {
 
 todosRoute.post("/addTodo", auth, todoMiddleware, async (req, res) => {
   try {
-    const todo = await TodoModel.create(req.body);
+    const todo = await prisma.todo.create({ data: { ...req.body } });
     res.status(200).send({ msg: "Todo added", todo });
   } catch (error) {
     res.status(400).send(error.message);
@@ -52,7 +52,7 @@ todosRoute.post("/addTodo", auth, todoMiddleware, async (req, res) => {
 todosRoute.patch("/update/:id", auth, async (req, res) => {
   const { id } = req.params;
   const userId = req.body.userId;
-  const user = await TodoModel.findOne({ _id: id });
+  const user = await prisma.todo.findUnique({ where: { id: +id } });
   try {
     if (userId === user.userId.toString()) {
       const updatedTodo = await prisma.todo.update({
