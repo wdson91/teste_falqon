@@ -7,6 +7,7 @@ CREATE TABLE "Todo" (
     "status" BOOLEAN NOT NULL,
     "userId" INTEGER NOT NULL,
     "name" TEXT,
+    "description" TEXT NOT NULL,
 
     CONSTRAINT "Todo_pkey" PRIMARY KEY ("id")
 );
@@ -17,7 +18,7 @@ CREATE TABLE "User" (
     "name" VARCHAR(255) NOT NULL,
     "email" TEXT NOT NULL,
     "pass" TEXT NOT NULL,
-    "age" INTEGER,
+    "age" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

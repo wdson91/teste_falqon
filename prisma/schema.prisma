@@ -14,19 +14,20 @@ datasource db {
 }
 
 model Todo {
-  id         Int      @id @default(autoincrement())
-  title      String   @db.VarChar(255)
-  created_at DateTime @default(now())
-  priority   Int
-  status     Boolean
-  userId     Int
-  name       String?
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  priority    Int
+  status      Boolean
+  userId      Int
+  name        String?
+  description String
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(255)
-  email String @unique
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(255)
+  email String  @unique
   pass  String
-  age   Int?
+  age   String?
 }

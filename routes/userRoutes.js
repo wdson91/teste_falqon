@@ -11,11 +11,12 @@ const prisma = new PrismaClient();
 
 userRouter.post("/register", registerMiddleware, async (req, res) => {
   const { pass } = req.body;
+
   try {
     const newPass = await bcrypt.hash(pass, 10);
 
     const user = await prisma.user.create({
-      data: { ...req.body, pass: newPass },
+      data: { ...req.body, age: +req.body.age, pass: newPass },
     });
 
     res.send({ msg: "User registered successfully", user });
@@ -38,9 +39,9 @@ userRouter.post("/login", async (req, res) => {
       return res.status(400).send("Invalid credentials");
     } else {
       const token = jwt.sign(
-        { userId: user._id, name: user.name },
+        { userId: user.id, name: user.name },
         process.env.secretKey,
-        { expiresIn: "8h" }
+        { expiresIn: "1h" }
       );
       res
         .status(200)
@@ -57,7 +58,6 @@ userRouter.get("/logout", async (req, res) => {
     return res.send({ msg: "Login First" });
   }
   try {
-    const blackList = await BlackListModel.create({ token });
     res.status(200).send({ msg: "User Logged out successfully" });
   } catch (error) {
     res.status(400).send({ msg: error.message });
